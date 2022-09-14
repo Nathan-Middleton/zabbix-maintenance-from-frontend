@@ -123,10 +123,7 @@ def maintenance_update(token, maintenance_id, hostid):
     payload['params']['maintenanceid'] = maintenance_id
     payload['params']['active_since'] = current_epoch
     payload['params']['active_till'] = new_epoch
-    payload['params']['hosts'] = []
-    hosts = {}
-    hosts['hostid'] = hostid
-    payload['params']['hosts'].append(hosts)
+    payload['params']['hostids'] = hostid
     payload['params']['timeperiods'] = []
     timeperiods = {}
     timeperiods['start_date'] = current_epoch
@@ -156,7 +153,6 @@ def hostid_get(token):
 
 
     request = requests.post(url, data=json.dumps(payload), headers=headers)
-
     response = request.json()
     hostid = response['result'][0]['hostid']
     return hostid
@@ -184,10 +180,7 @@ def maintenance_set(token, hostid):
     payload['params']['name'] = "Maintenance period for: " + hostname + ""
     payload['params']['active_since'] = current_epoch
     payload['params']['active_till'] = new_epoch
-    payload['params']['hosts'] = []
-    hosts = {}
-    hosts['hostid'] = hostid
-    payload['params']['hosts'].append(hosts)
+    payload['params']['hostids'] = [hostid]
     payload['params']['description'] = "This maintenance period is created by a script."
     payload['params']['timeperiods'] = []
     timeperiods = {}
